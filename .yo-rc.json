@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.14.0",
+    "libraryName": "service-ticket",
+    "libraryId": "7413e3e0-452e-4231-ac07-a9329cd2b336",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "ServiceTicket",
+    "solutionShortDescription": "ServiceTicket description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

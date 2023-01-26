@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "service-ticket-client-side-solution",
+    "id": "7413e3e0-452e-4231-ac07-a9329cd2b336",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.14.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "ServiceTicket description"
+      },
+      "longDescription": {
+        "default": "ServiceTicket description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "service-ticket Feature",
+        "description": "The feature that activates elements of the service-ticket solution.",
+        "id": "49e31f09-dc1b-49d6-9af5-0b18ba76cd3c",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/service-ticket.sppkg"
+  }
+}
