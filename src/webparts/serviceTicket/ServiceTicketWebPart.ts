@@ -5,15 +5,25 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import { BaseClientSideWebPart,
+  WebPartContext, } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
-
 import * as strings from 'ServiceTicketWebPartStrings';
 import ServiceTicket from './components/ServiceTicket';
 import { IServiceTicketProps } from './components/IServiceTicketProps';
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/fields";
+import "@pnp/sp/items";
+import "@pnp/sp/site-users/web";
+import "@pnp/sp/attachments";
+import "@pnp/sp/site-groups/web";
 
 export interface IServiceTicketWebPartProps {
   description: string;
+  context: WebPartContext;
+  spcontext: any;
 }
 
 export default class ServiceTicketWebPart extends BaseClientSideWebPart<IServiceTicketWebPartProps> {
@@ -22,20 +32,24 @@ export default class ServiceTicketWebPart extends BaseClientSideWebPart<IService
   private _environmentMessage: string = '';
 
   protected onInit(): Promise<void> {
-    this._environmentMessage = this._getEnvironmentMessage();
-
-    return super.onInit();
+    return super.onInit().then((_) => {
+      sp.setup({
+        spfxContext: this.context,
+      });
+    });
   }
 
   public render(): void {
     const element: React.ReactElement<IServiceTicketProps> = React.createElement(
       ServiceTicket,
       {
-        description: this.properties.description,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
+        // description: this.properties.description,
+        // isDarkTheme: this._isDarkTheme,
+        // environmentMessage: this._environmentMessage,
+        // hasTeamsContext: !!this.context.sdks.microsoftTeams,
+        // userDisplayName: this.context.pageContext.user.displayName
+        context: this.context,
+        spcontext: this.context,
       }
     );
 
