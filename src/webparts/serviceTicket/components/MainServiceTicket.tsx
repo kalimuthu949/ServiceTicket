@@ -177,7 +177,12 @@ const MainServiceTicket = (props: any) => {
       Description: "",
       ServiceTicketTypes: "",
     };
-    if (!masterService.ServiceTicketTypes) {
+    if (!masterService.Title) {
+      errValidation.Title = "Please enter name";
+      setErrorService({ ...errValidation });
+      setIsSpinner(false);
+    }
+    else if (!masterService.ServiceTicketTypes) {
       errValidation.ServiceTicketTypes = "Please select service ticket type";
       setErrorService({ ...errValidation });
       setIsSpinner(false);
@@ -220,8 +225,8 @@ const MainServiceTicket = (props: any) => {
     setIsLoader(true);
     getDropdownValue();
     props.sp.web.currentUser.get().then((res) => {
-      masterService.Title = res.Title;
-      setMasterService({ ...masterService });
+      //masterService.Title = res.Title;
+      //setMasterService({ ...masterService });
     });
   }, []);
   /* Function section end */
@@ -250,7 +255,7 @@ const MainServiceTicket = (props: any) => {
 
             {/* Feedback Text Field section start */}
             <div>
-              {/* <div style={{ marginTop: 12 }}>
+              <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
                   1.Your Name
                 </Label>
@@ -258,21 +263,21 @@ const MainServiceTicket = (props: any) => {
                   styles={
                     errorService.Title ? textBoxErrorStyles : textBoxStyles
                   }
-                  placeholder="Enter your answer"
+                  placeholder="Enter your name"
                   value={masterService.Title}
                   onChange={(e: any, value: string) => {
                     masterService.Title = value;
                     setMasterService({ ...masterService });
                   }}
                 />
-              </div> */}
+              </div>
               <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  1.Ticket Related To
+                  2.Ticket Related To
                 </Label>
                 <Dropdown
                   className="TicketDropDown"
-                  placeholder="Select your answer"
+                  placeholder="Select your ticket type"
                   styles={
                     errorService.ServiceTicketTypes
                       ? dropdownErrorStyles
@@ -288,7 +293,7 @@ const MainServiceTicket = (props: any) => {
               </div>
               <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  2. Ticket information
+                  3. Ticket information
                 </Label>
                 <TextField
                   styles={
@@ -296,7 +301,7 @@ const MainServiceTicket = (props: any) => {
                       ? textBoxErrorStyles
                       : longTextBoxStyles
                   }
-                  placeholder="Enter your answer"
+                  placeholder="Enter description"
                   multiline
                   value={masterService.Description}
                   onChange={(e: any, value: string) => {
