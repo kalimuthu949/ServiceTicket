@@ -1,31 +1,31 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
-
 .FeedBackBodySection {
-  background: #b3fbf2;
-  padding: 50px;
+    background: #d8f4f7;
+    padding: 20px;
 }
 
 .Header {
-  color: #00584d;
-  font-weight: bold;
-  font-size: 26px;
+    color: #00584d;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .LabelSection {
-  color: #00584d;
-  font-weight: bold;
-  font-size: 18px;
+    color: #00584d;
+    font-size: 14px;
+    padding-bottom: 0;
 }
 
 .btnSection {
-  width: 66%;
-  height: 40px;
-  margin: 20px 0px;
-  border: none;
-  border-radius: 6px;
-  background: #edc32c;
-  color: #00584d;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
+    width: 50%;
+    // height: 40px;
+    margin: 20px 0px;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 3px;
+    background: #fdbe14;
+    color: #00584d;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }

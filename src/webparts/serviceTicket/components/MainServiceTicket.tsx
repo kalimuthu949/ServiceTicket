@@ -10,7 +10,7 @@ import {
   IDropdownStyles,
 } from "@fluentui/react";
 import { useState, useEffect } from "react";
-
+import "../../../ExternalRef/css/Style.css";
 interface IServiceTicket {
   Title: string;
   Description: string;
@@ -51,6 +51,7 @@ const MainServiceTicket = (props: any) => {
   const [errorService, setErrorService] = useState<IServiceTicket>(errService);
   const [isLoader, setIsLoader] = useState<boolean>(true);
   const [isSpinner, setIsSpinner] = useState<boolean>(false);
+  const [curUser, setCurUser] = useState("");
   /* State-decluration section end */
 
   /* Style section start */
@@ -94,9 +95,8 @@ const MainServiceTicket = (props: any) => {
     root: {
       width: "100%",
       ".ms-Dropdown-title": {
-        padding: "5px 10px",
         border: "1px solid #00584d",
-        height: "40px",
+
         boxShadow: "0px 3px 20px #888b8d1f",
         borderRadius: "3px",
         ":hover": {
@@ -118,9 +118,7 @@ const MainServiceTicket = (props: any) => {
     root: {
       width: "100%",
       ".ms-Dropdown-title": {
-        padding: "5px 10px",
         border: "2px solid red",
-        height: "40px",
         boxShadow: "0px 3px 20px #888b8d1f",
         background: "#fff",
         borderRadius: "3px",
@@ -144,7 +142,8 @@ const MainServiceTicket = (props: any) => {
   // get Dropdown value function
   const getDropdownValue = async () => {
     await props.sp.web.lists
-      .getByTitle("Service Ticket")
+      .getByTitle("IT Service Ticket")
+      // .getByTitle("Service Ticket")IT Service Ticket
       .fields.getByInternalNameOrTitle("ServiceTicketTypes")
       .get()
       .then((response: any) => {
@@ -177,11 +176,7 @@ const MainServiceTicket = (props: any) => {
       Description: "",
       ServiceTicketTypes: "",
     };
-    if (!masterService.Title) {
-      errValidation.Title = "Please enter your name";
-      setErrorService({ ...errValidation });
-      setIsSpinner(false);
-    } else if (!masterService.Description) {
+    if (!masterService.Description) {
       errValidation.Description = "Please enter your description";
       setErrorService({ ...errValidation });
       setIsSpinner(false);
@@ -198,7 +193,8 @@ const MainServiceTicket = (props: any) => {
   // get record add function section
   const addRecord = async () => {
     await props.sp.web.lists
-      .getByTitle("Service Ticket")
+      .getByTitle("IT Service Ticket")
+      // .getByTitle("Service Ticket")IT Service Ticket
       .items.add(masterService)
       .then((response: any) => {
         setMasterService({
@@ -217,6 +213,10 @@ const MainServiceTicket = (props: any) => {
   useEffect(() => {
     setIsLoader(true);
     getDropdownValue();
+    props.sp.web.currentUser.get().then((res) => {
+      masterService.Title = res.Title;
+      setMasterService({ ...masterService });
+    });
   }, []);
   /* Function section end */
 
@@ -244,7 +244,7 @@ const MainServiceTicket = (props: any) => {
 
             {/* Feedback Text Field section start */}
             <div>
-              <div>
+              {/* <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
                   1.Your Name
                 </Label>
@@ -259,10 +259,30 @@ const MainServiceTicket = (props: any) => {
                     setMasterService({ ...masterService });
                   }}
                 />
-              </div>
-              <div>
+              </div> */}
+              <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  2.Describe the Problem
+                  1.Ticket Related To
+                </Label>
+                <Dropdown
+                  className="TicketDropDown"
+                  placeholder="Select your answer"
+                  styles={
+                    errorService.ServiceTicketTypes
+                      ? dropdownErrorStyles
+                      : templateDropdownStyles
+                  }
+                  selectedKey={masterService.ServiceTicketTypes}
+                  options={serviceType}
+                  onChange={(e, option) => {
+                    masterService.ServiceTicketTypes = option.key;
+                    setMasterService({ ...masterService });
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <Label required className={styles.LabelSection}>
+                  2. Ticket information
                 </Label>
                 <TextField
                   styles={
@@ -275,25 +295,6 @@ const MainServiceTicket = (props: any) => {
                   value={masterService.Description}
                   onChange={(e: any, value: string) => {
                     masterService.Description = value;
-                    setMasterService({ ...masterService });
-                  }}
-                />
-              </div>
-              <div>
-                <Label required className={styles.LabelSection}>
-                  3.Ticket Related To
-                </Label>
-                <Dropdown
-                  placeholder="Select your answer"
-                  styles={
-                    errorService.ServiceTicketTypes
-                      ? dropdownErrorStyles
-                      : templateDropdownStyles
-                  }
-                  selectedKey={masterService.ServiceTicketTypes}
-                  options={serviceType}
-                  onChange={(e, option) => {
-                    masterService.ServiceTicketTypes = option.key;
                     setMasterService({ ...masterService });
                   }}
                 />
@@ -317,7 +318,7 @@ const MainServiceTicket = (props: any) => {
                 className={styles.btnSection}
                 onClick={() => (setIsSpinner(true), getvalidation())}
               >
-                {isSpinner ? <Spinner /> : "SUBMIT"}
+                {isSpinner ? <Spinner /> : "Submit"}
               </button>
             </div>
             {/* BTN section end */}
