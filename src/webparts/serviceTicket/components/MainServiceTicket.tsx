@@ -52,6 +52,7 @@ const MainServiceTicket = (props: any) => {
   const [isLoader, setIsLoader] = useState<boolean>(true);
   const [isSpinner, setIsSpinner] = useState<boolean>(false);
   const [curUser, setCurUser] = useState("");
+  const [successmsg,setsuccessmsg]= useState("");
   /* State-decluration section end */
 
   /* Style section start */
@@ -176,12 +177,13 @@ const MainServiceTicket = (props: any) => {
       Description: "",
       ServiceTicketTypes: "",
     };
-    if (!masterService.Description) {
-      errValidation.Description = "Please enter your description";
+    if (!masterService.ServiceTicketTypes) {
+      errValidation.ServiceTicketTypes = "Please select service ticket type";
       setErrorService({ ...errValidation });
       setIsSpinner(false);
-    } else if (!masterService.ServiceTicketTypes) {
-      errValidation.ServiceTicketTypes = "Please select service ticket type";
+    } 
+    else if (!masterService.Description) {
+      errValidation.Description = "Please enter your description";
       setErrorService({ ...errValidation });
       setIsSpinner(false);
     } else {
@@ -203,6 +205,10 @@ const MainServiceTicket = (props: any) => {
           ServiceTicketTypes: null,
         });
         setIsSpinner(false);
+        setsuccessmsg("Your service ticket submitted succesfully !!!");
+        setTimeout(() => {
+          setsuccessmsg("");
+        }, 2000);
       })
       .catch((error: any) => {
         getErrorFunction(error);
@@ -312,6 +318,9 @@ const MainServiceTicket = (props: any) => {
                 {errorService.ServiceTicketTypes
                   ? `* ${errorService.ServiceTicketTypes}`
                   : ""}
+              </div>
+              <div style={{ color: "green", fontWeight: "600" }}>
+                {successmsg}
               </div>
               <button
                 disabled={isSpinner}
