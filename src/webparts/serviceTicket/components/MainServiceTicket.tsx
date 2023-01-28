@@ -10,6 +10,8 @@ import {
   IDropdownStyles,
 } from "@fluentui/react";
 import { useState, useEffect } from "react";
+import { useBoolean } from '@fluentui/react-hooks';
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
 import "../../../ExternalRef/css/Style.css";
 interface IServiceTicket {
   Title: string;
@@ -53,6 +55,17 @@ const MainServiceTicket = (props: any) => {
   const [isSpinner, setIsSpinner] = useState<boolean>(false);
   const [curUser, setCurUser] = useState("");
   const [successmsg,setsuccessmsg]= useState("");
+  const [disablebtn,setdisablebtn]=useState(false);
+  const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(false);
+
+  const modalPropsStyles = { main: { maxWidth: 450 } };
+const dialogContentProps = {
+  type: DialogType.normal,
+  title: 'IT ServiceTicket',
+  subText: 'Email our salesforce tech team.',
+};
+
+  
   /* State-decluration section end */
 
   /* Style section start */
@@ -193,6 +206,7 @@ const MainServiceTicket = (props: any) => {
       setIsSpinner(false);
     } else {
       setErrorService({ ...errValidation });
+      setdisablebtn(true);
       addRecord();
     }
   };
@@ -213,6 +227,7 @@ const MainServiceTicket = (props: any) => {
         setsuccessmsg("Your service ticket submitted succesfully !!!");
         setTimeout(() => {
           setsuccessmsg("");
+          setdisablebtn(false);
         }, 2000);
       })
       .catch((error: any) => {
@@ -261,7 +276,7 @@ const MainServiceTicket = (props: any) => {
                 </Label>
                 <TextField
                   styles={
-                    errorService.Title ? textBoxErrorStyles : textBoxStyles
+                    errorService.Title&&!disablebtn ? textBoxErrorStyles : textBoxStyles
                   }
                   placeholder="Enter your name"
                   value={masterService.Title}
@@ -279,7 +294,7 @@ const MainServiceTicket = (props: any) => {
                   className="TicketDropDown"
                   placeholder="Select your ticket type"
                   styles={
-                    errorService.ServiceTicketTypes
+                    errorService.ServiceTicketTypes&&!disablebtn
                       ? dropdownErrorStyles
                       : templateDropdownStyles
                   }
@@ -288,6 +303,16 @@ const MainServiceTicket = (props: any) => {
                   onChange={(e, option) => {
                     masterService.ServiceTicketTypes = option.key;
                     setMasterService({ ...masterService });
+
+                    if(option.key=="Salesforce Related")
+                    {
+                      toggleHideDialog();
+                      setdisablebtn(true);
+                    }
+                    else
+                    {
+                        setdisablebtn(false);
+                    }
                   }}
                 />
               </div>
@@ -297,7 +322,7 @@ const MainServiceTicket = (props: any) => {
                 </Label>
                 <TextField
                   styles={
-                    errorService.Description
+                    errorService.Description&&!disablebtn
                       ? textBoxErrorStyles
                       : longTextBoxStyles
                   }
@@ -315,7 +340,7 @@ const MainServiceTicket = (props: any) => {
 
             {/* BTN section start */}
             <div>
-              <div style={{ color: "red", fontWeight: "600" }}>
+             {!disablebtn?( <div style={{ color: "red", fontWeight: "600" }}>
                 {errorService.Title ? `* ${errorService.Title}` : ""}
                 {errorService.Description
                   ? `* ${errorService.Description}`
@@ -323,17 +348,29 @@ const MainServiceTicket = (props: any) => {
                 {errorService.ServiceTicketTypes
                   ? `* ${errorService.ServiceTicketTypes}`
                   : ""}
-              </div>
+              </div>):""}
               <div style={{ color: "green", fontWeight: "600" }}>
                 {successmsg}
               </div>
               <button
-                disabled={isSpinner}
+                disabled={disablebtn}
                 className={styles.btnSection}
                 onClick={() => (setIsSpinner(true), getvalidation())}
               >
-                {isSpinner ? <Spinner /> : "Submit"}
+                {isSpinner ? <Spinner /> : "SUBMIT"}
               </button>
+              <Dialog
+                hidden={hideDialog}
+                onDismiss={toggleHideDialog}
+                dialogContentProps={dialogContentProps}
+              >
+                <button onClick={()=>{
+                      toggleHideDialog();
+                      masterService.ServiceTicketTypes = "";
+                      setMasterService({ ...masterService });
+                      setdisablebtn(false);
+                }}>Close</button>
+              </Dialog>
             </div>
             {/* BTN section end */}
           </div>
