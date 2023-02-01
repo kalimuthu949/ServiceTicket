@@ -10,3 +10,7 @@
 .dialogSection .ms-Dialog-main {
     min-height: unset !important;
 }
+
+.clsTextSubmit label{
+    color: #00584d !important;
+}

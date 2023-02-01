@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useBoolean } from "@fluentui/react-hooks";
 import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
 import "../../../ExternalRef/css/Style.css";
+
 interface IServiceTicket {
   Title: string;
   Description: string;
@@ -314,7 +315,7 @@ const MainServiceTicket = (props: any) => {
               </div>
               <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  3. Ticket information
+                  3. Description
                 </Label>
                 <TextField
                   styles={
@@ -357,7 +358,7 @@ const MainServiceTicket = (props: any) => {
                 className={styles.btnSection}
                 onClick={() => (setIsSpinner(true), getvalidation())}
               >
-                {isSpinner ? <Spinner /> : "SUBMIT"}
+                {isSpinner ? <Spinner /> : "Submit"}
               </button>
               <div className="dialogSection">
                 <Dialog
@@ -388,6 +389,7 @@ const MainServiceTicket = (props: any) => {
                 </Dialog>
               </div>
             </div>
+            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b> : Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department</label></div>
             {/* BTN section end */}
           </div>
           {/* Feedback section end */}
