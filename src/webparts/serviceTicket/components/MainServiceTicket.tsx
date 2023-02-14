@@ -52,6 +52,7 @@ const MainServiceTicket = (props: any) => {
   const [masterService, setMasterService] =
     useState<IServiceTicket>(serviceObj);
   const [errorService, setErrorService] = useState<IServiceTicket>(errService);
+  const [errorAdminmsg, seterrorAdminmsg] = useState<string>();
   const [isLoader, setIsLoader] = useState<boolean>(true);
   const [isSpinner, setIsSpinner] = useState<boolean>(false);
   const [curUser, setCurUser] = useState("");
@@ -161,6 +162,7 @@ const MainServiceTicket = (props: any) => {
       .fields.getByInternalNameOrTitle("ServiceTicketTypes")
       .get()
       .then((response: any) => {
+        serviceType=[];
         if (response.Choices.length > 0) {
           response.Choices.forEach((choice: string) => {
             serviceType.push({
@@ -180,7 +182,14 @@ const MainServiceTicket = (props: any) => {
 
   // get error function section
   const getErrorFunction = (error: any) => {
-    console.log(error);
+    setdisablebtn(true);
+    seterrorAdminmsg("Something went wrong. Please contact system admin.")
+    setIsSpinner(false);
+    setIsLoader(false);
+    setTimeout(() => {
+      seterrorAdminmsg("");
+      setdisablebtn(false);
+    }, 2000);
   };
 
   // validation function section
@@ -337,7 +346,7 @@ const MainServiceTicket = (props: any) => {
 
             {/* BTN section start */}
             <div>
-              {!disablebtn ? (
+              {!disablebtn ? (<>
                 <div style={{ color: "red", fontWeight: "600" }}>
                   {errorService.Title ? `* ${errorService.Title}` : ""}
                   {errorService.Description
@@ -347,11 +356,15 @@ const MainServiceTicket = (props: any) => {
                     ? `* ${errorService.ServiceTicketTypes}`
                     : ""}
                 </div>
+                </>
               ) : (
                 ""
               )}
               <div style={{ color: "green", fontWeight: "600" }}>
                 {successmsg}
+              </div>
+              <div style={{ color: "red", fontWeight: "600" }}>
+                {(!errorService.Title&&!errorService.Description&&!errorService.ServiceTicketTypes)&&errorAdminmsg?errorAdminmsg:""}
               </div>
               <button
                 disabled={disablebtn}
@@ -389,7 +402,7 @@ const MainServiceTicket = (props: any) => {
                 </Dialog>
               </div>
             </div>
-            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b> : Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department</label></div>
+            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b>: Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department</label></div>
             {/* BTN section end */}
           </div>
           {/* Feedback section end */}
