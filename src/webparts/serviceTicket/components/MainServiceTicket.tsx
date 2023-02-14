@@ -371,7 +371,7 @@ const MainServiceTicket = (props: any) => {
                 className={styles.btnSection}
                 onClick={() => (setIsSpinner(true), getvalidation())}
               >
-                {isSpinner ? <Spinner /> : "Submit"}
+                {isSpinner ? <Spinner /> : "SUBMIT"}
               </button>
               <div className="dialogSection">
                 <Dialog
