@@ -231,7 +231,7 @@ const MainServiceTicket = (props: any) => {
           ServiceTicketTypes: null,
         });
         setIsSpinner(false);
-        setsuccessmsg("Your service ticket submitted succesfully !!!");
+        setsuccessmsg("Your service ticket was submitted succesfully");
         setTimeout(() => {
           setsuccessmsg("");
           setdisablebtn(false);
