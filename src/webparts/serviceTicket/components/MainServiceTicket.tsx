@@ -63,7 +63,7 @@ const MainServiceTicket = (props: any) => {
   const modalPropsStyles = { main: { maxWidth: 450 } };
   const dialogContentProps = {
     type: DialogType.normal,
-    title: "IT ServiceTicket",
+    title: "IT Service Ticket",
     subText: "Email our salesforce tech team.",
   };
 
@@ -279,7 +279,7 @@ const MainServiceTicket = (props: any) => {
             <div>
               <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  1.Your Name
+                  1. Your Name
                 </Label>
                 <TextField
                   styles={
@@ -297,7 +297,7 @@ const MainServiceTicket = (props: any) => {
               </div>
               <div style={{ marginTop: 12 }}>
                 <Label required className={styles.LabelSection}>
-                  2.Ticket Related To
+                  2. Ticket Related To
                 </Label>
                 <Dropdown
                   className="TicketDropDown"
@@ -402,7 +402,7 @@ const MainServiceTicket = (props: any) => {
                 </Dialog>
               </div>
             </div>
-            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b>: Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department</label></div>
+            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b>: Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department.</label></div>
             {/* BTN section end */}
           </div>
           {/* Feedback section end */}
