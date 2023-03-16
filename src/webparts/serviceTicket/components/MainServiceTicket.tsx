@@ -402,7 +402,7 @@ const MainServiceTicket = (props: any) => {
                 </Dialog>
               </div>
             </div>
-            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b>: Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department.</label></div>
+            <div className="clsTextSubmit"><label style={{color:"#00584d"}}><b>Note</b>: Create an IT service ticket for Kam at Wendego. Salesforce-related questions should be directed to the Technology department at techteam@hosthealthcare.com.</label></div>
             {/* BTN section end */}
           </div>
           {/* Feedback section end */}
