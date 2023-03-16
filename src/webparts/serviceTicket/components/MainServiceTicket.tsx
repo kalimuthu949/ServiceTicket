@@ -64,7 +64,7 @@ const MainServiceTicket = (props: any) => {
   const dialogContentProps = {
     type: DialogType.normal,
     title: "IT Service Ticket",
-    subText: "Email our salesforce tech team.",
+    subText: "Email our salesforce tech team at techteam@hosthealthcare.com.",
   };
 
   /* State-decluration section end */
